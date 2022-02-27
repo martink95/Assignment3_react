@@ -1,4 +1,6 @@
+import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { loginUser } from "../../api/user";
 
 const usernameConfig = {
     required: true,
@@ -12,15 +14,19 @@ const LoginForm = () => {
         formState: { errors },
     } = useForm();
 
-    const onSubmit = (data) => {
-        console.log(data);
+    const [ loading, setLoading ] = useState(false);
+    const [ apiError, setApiError] = useState(null);
+
+    const onSubmit = async ({ username }) => {
+        setLoading(true);
+        const [ error, user ] = await loginUser(username);
+        if(error !== null ) setApiError(error);
+        setLoading(false);
     };
 
     const errorMessage = (() => {
-        if(!errors.username) {
-            return null;
-        }
-
+        if(!errors.username) return null;
+        
         if(errors.username.type === "required") return <span>Username is required</span>;
 
         if(errors.username.type === "minLength") return <span>Username is too short (min. 3 characters)</span>;
@@ -35,12 +41,14 @@ const LoginForm = () => {
                     <input
                         type="text"
                         {...register("username", usernameConfig)}
-                        placeholder="Translator3000"
+                        placeholder="Enter username"
                     />
                     { errorMessage }
                 </fieldset>
 
-                <button type="submit">Continue</button>
+                <button type="submit" disabled={ loading }>Continue</button>
+                { loading && <p>Logging in...</p> }
+                { apiError && <p>{ apiError }</p> }
             </form>
         </>
     );
