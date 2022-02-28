@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 import { loginUser } from "../../api/user";
 
 const usernameConfig = {
@@ -8,6 +9,7 @@ const usernameConfig = {
 };
 
 const LoginForm = () => {
+    const navigate = useNavigate();
     const {
         register,
         handleSubmit,
@@ -20,8 +22,10 @@ const LoginForm = () => {
     const onSubmit = async ({ username }) => {
         setLoading(true);
         const [ error, user ] = await loginUser(username);
+        console.log(user);
         if(error !== null ) setApiError(error);
         setLoading(false);
+        if(error === null || error === undefined) navigate("/translate")
     };
 
     const errorMessage = (() => {

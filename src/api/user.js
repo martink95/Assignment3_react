@@ -27,8 +27,8 @@ export const createUser = async (username) => {
         });
 
         if(!response.ok) throw new Error(`Could not create user with username ${username}`);
-
-
+        const data = await response.json();
+        return [ null, data ];
     }
     catch (error) {
         return [ error.message, [] ];
@@ -40,5 +40,12 @@ export const loginUser = async (username) => {
     if(checkError !== null) return [ checkError, null ];
     if(user.length > 0) return [ null, user.pop() ];
     return await createUser(username);
+}
 
+export const logoutUser = () => {
+    console.log("Logout");
+}
+
+export const patchTranslation = async (username) => {
+    
 }
