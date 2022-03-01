@@ -1,6 +1,6 @@
 import { createHeaders } from "./index";
 const apiUrl = process.env.REACT_APP_API_URL;
-const apiKey = process.env.REACT_APP_API_KEY;
+const storage = window.localStorage;
 
 export const checkForUser = async (username) => {
     try {
@@ -43,18 +43,59 @@ export const loginUser = async (username) => {
     return await createUser(username);
 }
 
-export const logoutUser = () => {
-    console.log("Logout");
-}
-
 export const createTranslation = async (username, translation) => {
+    const [checkError, user] = await checkForUser(username)
+    if(checkError !== null) return [ checkError, null ];
+    if(user.length > 0) {
+        let word = translation.replace(/[^A-Za-z']/g, "");
+        word.toLowerCase();
+        let newTranslations = user[0].translations;
+        if(!newTranslations.includes(word)) newTranslations.push(word);
+        storage.setItem("translations", newTranslations);
+
+        try {
+            const response = await fetch(`${apiUrl}/${user[0].id}`, {
+                method: "PATCH",
+                headers: createHeaders(),
+                body: JSON.stringify({
+                    translations: newTranslations
+                })
+            });
+    
+            if(!response.ok) throw new Error(`Could not create translation for ${user[0].username}`);
+            const data = await response.json();
+            return [ null, data ];
+        }
+        catch (error) {
+            return [ error.message, [] ];
+        }
+    }
     
 }
 
-export const deleteFirstTranslation = async (username) => {
-
-}
-
 export const deleteAllTranslations = async (username) => {
+    const [checkError, user] = await checkForUser(username)
+
+    if(checkError !== null) return [ checkError, null ];
+    console.log(user);
+    if(user.length > 0) {
+        try {
+            const response = await fetch(`${apiUrl}/${user[0].id}`, {
+                method: "PATCH",
+                headers: createHeaders(),
+                body: JSON.stringify({
+                    translations: []
+                })
+            });
+    
+            if(!response.ok) throw new Error(`Could not delete translation for ${user[0].username}`);
+            const data = await response.json();
+            storage.setItem("translations", []);
+            return [ null, data ];
+        }
+        catch (error) {
+            return [ error.message, [] ];
+        }
+    }
     
 }

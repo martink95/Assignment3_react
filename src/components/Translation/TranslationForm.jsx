@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import TranslationList from "./TranslationList";
+import { createTranslation } from "../../api/user";
+import TranslationItem from "./TranslationItem";
 
 const inputConfig = {
     required: true,
-    minLength: 1,
 };
 
 const TranslationForm = () => {
@@ -16,15 +16,23 @@ const TranslationForm = () => {
 
     const [ loading, setLoading ] = useState(false);
     const [ translate, setTranslate] = useState(null);
+    const storage = window.localStorage;
 
-    const onSubmit = ({ word }) => {
+    const onSubmit = async ({ word }) => {
         setLoading(true);
-        setTranslate(<TranslationList input={word} />)
+        setTranslate(<TranslationItem input={word} />)
+        await createTranslation(storage.getItem("username"), word)
         setLoading(false);
-    }    
+    }
+
+    const errorMessage = (() => {
+        if(!errors.word) return null;
+        if(errors.word.type === "required") return <span className="error-message">Please type something</span>;
+    })();
 
     return(
         <>
+        <div className="form-container">
             <form onSubmit={handleSubmit(onSubmit)}>
                 <fieldset>
                     <label htmlFor="word">word or sentence</label>
@@ -33,12 +41,16 @@ const TranslationForm = () => {
                         {...register("word", inputConfig)}
                         placeholder="Enter word or sentence"
                     />
+                    <button type="submit" disabled={ loading }>Translate</button>
+                    { errorMessage }
                 </fieldset>
-
-                <button type="submit" disabled={ loading }>Translate</button>
-                { loading && <p>Translating...</p> }
                 </form>
-                {translate}
+                
+                { loading && <p>Translating...</p> }
+                    <div className="translation">
+                    {translate}
+                    </div>
+                </div>
         </>
     );
 }

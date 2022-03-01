@@ -1,0 +1,154 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+nav {
+    display: flex;
+    width: 100vw;
+    padding-bottom: 25px;
+    background-color: rgb(241, 171, 21);
+}
+
+nav ul {
+    margin-left: 50px;
+    margin-right: 50px;
+    margin-top: 30px;
+    width: 100%;
+}
+
+nav ul li {
+    margin: 5px 10px;
+    display: inline;
+    list-style: none;
+}
+
+nav ul li a {
+    color: #1b1b1b;
+    text-decoration: none;
+}
+
+nav ul li button {
+    float: right;
+    border: none;
+    padding: 10px 20px;
+    background-color: rgb(251, 70, 70);
+    color: white;
+}
+
+nav ul li button:hover {
+    cursor: pointer;
+    background-color: rgb(226, 40, 40);
+}
+
+h1 {
+    margin-top: 50px;
+    margin-bottom: 35px;
+    text-align: center;
+    justify-content: center;
+}
+.form-container {
+    text-align: center; 
+}
+
+form {
+    width: 800px;
+    margin: 0 auto;
+}
+
+form fieldset {
+    border-radius: 10px;
+    padding: 50px 25px;
+    border: none;
+    background-color: rgb(241, 171, 21);
+}
+
+form label {
+    display: none;
+}
+
+form button {
+    border: 1px solid #16a134;
+    border-radius: 0 5px 5px 0;
+    background-color: #16a134;
+    color: white;
+    padding: 10px 20px
+}
+
+form button:hover {
+    cursor: pointer;
+    background-color: #0f8629;
+    border: 1px solid #0f8629;
+}
+
+form input {
+    width: 250px;
+    padding: 10px 20px;
+    border: 1px solid #1b1b1b;
+    border-radius: 5px 0 0 5px;
+}
+
+form input:focus {
+    border: 1px solid #16a134;
+}
+
+.error-message {
+    color:rgb(255, 0, 0);
+}
+
+.translation {
+    justify-content: center;
+}
+
+.translation-item {
+    margin-bottom: 20px;
+    display: inline-block;
+    background-color: antiquewhite;
+}
+
+.translation-item img {
+    width: 60px;
+    height: 60px;
+}
+
+.delete-btn {
+    border-radius: 5px;
+    background-color: rgb(251, 70, 70);
+    border: none;
+}
+
+.delete-btn:hover {
+    border: none;
+    background-color: rgb(226, 40, 40);
+}
+
+@media (max-width: 900px) {
+    form {
+        width: 600px;
+        margin: 0 auto;
+    }
+}
+
+@media (max-width: 600px) {
+    nav ul li {
+        margin: 5px 10px;
+        display: block;
+        list-style: none;
+    }
+
+    nav ul li button {
+        float: none;
+    }
+
+    form fieldset {
+        border-radius: 10px;
+        padding: 5px 5px;
+        border: none;
+        background-color: rgb(241, 171, 21);
+    }
+
+    form {
+        width: 400px;
+        margin: 0 auto;
+    }
+  }
