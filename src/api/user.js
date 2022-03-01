@@ -1,5 +1,6 @@
 import { createHeaders } from "./index";
 const apiUrl = process.env.REACT_APP_API_URL;
+const apiKey = process.env.REACT_APP_API_KEY;
 
 export const checkForUser = async (username) => {
     try {
@@ -46,6 +47,14 @@ export const logoutUser = () => {
     console.log("Logout");
 }
 
-export const patchTranslation = async (username) => {
+export const createTranslation = async (username, translation) => {
+    
+}
+
+export const deleteFirstTranslation = async (username) => {
+
+}
+
+export const deleteAllTranslations = async (username) => {
     
 }
