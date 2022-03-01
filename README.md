@@ -7,7 +7,7 @@ The third assignment in the front-end part of Noroff's Accelerate bootcamp is a 
 ## Installation
 
 * Clone down the repository
-* npm install -> if having issues "npm i --save --legacy-peer-deps" should do the trick
+* ``$npm install`` -> if having issues ``$npm i --save --legacy-peer-deps`` should do the trick
 * ``$npm start``
 * go to localhost url port 3000
 
